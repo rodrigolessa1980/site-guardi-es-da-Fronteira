@@ -1,0 +1,51 @@
+# Dependências
+node_modules/
+
+# Build (Vite)
+dist/
+dist-ssr/
+*.local
+
+# Variáveis de ambiente (mantém .env.example)
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Cache
+.vite/
+.cache/
+.parcel-cache/
+.eslintcache
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE / Editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Testes / cobertura
+coverage/
+.nyc_output/
+*.lcov
+
+# Temporários
+*.tmp
+*.temp
+.temp/
+tmp/
+temp/

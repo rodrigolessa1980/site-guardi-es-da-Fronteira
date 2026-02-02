@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-black text-white font-sans antialiased;
+    overflow-x: hidden;
+  }
+}
+
+/* Scroll suave - margem para navbar + logo sobre a linha (header ~4rem + metade logo ~2rem) */
+.scroll-mt-nav {
+  scroll-margin-top: 6rem;
+}
+@media (min-width: 640px) {
+  .scroll-mt-nav {
+    scroll-margin-top: 7rem;
+  }
+}
+
+/* Evita zoom em inputs no iOS */
+@media screen and (max-width: 480px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
