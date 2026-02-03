@@ -1,11 +1,26 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { HiX } from 'react-icons/hi'
 import { useLanguage } from '../context/LanguageContext'
+import { PADREADORES, MATRIZES } from '../data/animals'
 
 const WHATSAPP_NUMERO = '554792369459'
 
+function getFotoPai(nomePai) {
+  const padrao = PADREADORES.find((p) => p.nome === nomePai)
+  return padrao?.foto ?? null
+}
+
+function getFotoMae(nomeMae) {
+  const matriz = MATRIZES.find((m) => m.nome === nomeMae)
+  return matriz?.foto ?? null
+}
+
 export default function AnimalDetailModal({ animal, onClose, showTenhoInteresse = false }) {
   const { t } = useLanguage()
+  const [lightboxFoto, setLightboxFoto] = useState(null)
+  const fotoPai = getFotoPai(animal.pai)
+  const fotoMae = getFotoMae(animal.mae)
 
   const statusLabels = {
     disponivel: { label: t('filhotes.disponivel'), color: 'bg-italy-green' },
@@ -113,7 +128,38 @@ export default function AnimalDetailModal({ animal, onClose, showTenhoInteresse 
 
           <div>
             <h3 className="font-semibold text-italy-green mb-2">{t('loja.filiacao')}</h3>
-            <p className="text-white/80 text-sm break-words">{t('loja.pai')}: {animal.pai} | {t('loja.mae')}: {animal.mae}</p>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
+              <div className="flex items-center gap-2">
+                <span className="text-italy-green font-medium">{t('loja.pai')}:</span>
+                {fotoPai ? (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxFoto({ src: fotoPai, nome: animal.pai })}
+                    className="flex items-center gap-2 rounded-lg overflow-hidden border border-white/20 hover:border-italy-green/60 transition-colors focus:outline-none focus:ring-2 focus:ring-italy-green"
+                  >
+                    <img src={fotoPai} alt={animal.pai} className="w-12 h-12 object-cover" />
+                    <span className="text-white/90 font-medium">{animal.pai}</span>
+                  </button>
+                ) : (
+                  <span className="text-white/80">{animal.pai}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-italy-green font-medium">{t('loja.mae')}:</span>
+                {fotoMae ? (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxFoto({ src: fotoMae, nome: animal.mae })}
+                    className="flex items-center gap-2 rounded-lg overflow-hidden border border-white/20 hover:border-italy-green/60 transition-colors focus:outline-none focus:ring-2 focus:ring-italy-green"
+                  >
+                    <img src={fotoMae} alt={animal.mae} className="w-12 h-12 object-cover" />
+                    <span className="text-white/90 font-medium">{animal.mae}</span>
+                  </button>
+                ) : (
+                  <span className="text-white/80">{animal.mae}</span>
+                )}
+              </div>
+            </div>
           </div>
 
           <div>
@@ -135,13 +181,54 @@ export default function AnimalDetailModal({ animal, onClose, showTenhoInteresse 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleTenhoInteresse}
-              className="w-full py-4 min-h-[48px] bg-gradient-to-r from-italy-green to-italy-red text-white font-semibold rounded-lg flex items-center justify-center"
+              className="w-full py-3 min-h-[44px] text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white transition-colors flex items-center justify-center"
             >
               {t('loja.tenhoInteresse')}
             </motion.button>
           )}
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {lightboxFoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxFoto(null)}
+            className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Escape' && setLightboxFoto(null)}
+            aria-label="Fechar foto"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
+            >
+              <button
+                type="button"
+                onClick={() => setLightboxFoto(null)}
+                className="absolute -top-12 right-0 min-w-[44px] min-h-[44px] p-2 flex items-center justify-center rounded-full bg-white/20 text-white hover:bg-italy-red transition-colors z-10"
+                aria-label="Fechar"
+              >
+                <HiX size={24} />
+              </button>
+              <img
+                src={lightboxFoto.src}
+                alt={lightboxFoto.nome}
+                className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <p className="mt-2 text-white font-medium text-lg">{lightboxFoto.nome}</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

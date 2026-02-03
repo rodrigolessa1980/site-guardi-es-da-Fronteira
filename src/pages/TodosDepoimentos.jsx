@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { HiArrowLeft, HiChat } from 'react-icons/hi'
 import { motion } from 'framer-motion'
@@ -30,6 +30,10 @@ function FotoDepoimento({ id }) {
 
 export default function TodosDepoimentos() {
   const { t } = useLanguage()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="min-h-screen bg-black text-white pt-36 sm:pt-40 md:pt-[11rem] pb-12 sm:pb-16">

@@ -29,7 +29,7 @@ export default function Hero() {
     >
       {/* Slideshow - camada de fundo (absolute só para layering, não para layout) */}
       <div className="absolute inset-0 bg-black flex items-center justify-center" aria-hidden="true">
-        <div className="w-full h-full max-w-full mx-auto flex items-center justify-center p-2 sm:p-4 lg:p-6">
+        <div className="w-full h-full max-w-full mx-auto flex items-center justify-center pt-12 sm:pt-14 lg:pt-16 px-2 sm:px-4 lg:px-6 pb-2 sm:pb-4 lg:pb-6">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
