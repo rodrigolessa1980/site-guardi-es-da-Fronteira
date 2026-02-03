@@ -9,11 +9,10 @@ export default function GaleriaCanil() {
   const { t } = useLanguage()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     if (window.location.hash === '#entregas') {
       const el = document.getElementById('entregas')
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100)
-    } else {
-      window.scrollTo(0, 0)
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 150)
     }
   }, [])
 
@@ -23,8 +22,8 @@ export default function GaleriaCanil() {
   ].slice(0, 12)
 
   return (
-    <div className="min-h-screen bg-black text-white pt-32 sm:pt-36 md:pt-[10.5rem] pb-12 sm:pb-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen bg-black text-white pt-36 sm:pt-40 md:pt-[11rem] pb-12 sm:pb-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-6">
         <Link
           to="/#nosso-canil"
           className="inline-flex items-center gap-2 text-white/60 hover:text-italy-green transition-colors mb-8"
