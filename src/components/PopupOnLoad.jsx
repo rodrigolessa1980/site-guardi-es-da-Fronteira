@@ -35,12 +35,12 @@ export default function PopupOnLoad() {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: 'spring', damping: 25 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-[95vw] max-h-[90vh]"
+            className="relative max-w-[76vw] max-h-[72vh]"
           >
             <img
               src={POPUP_IMAGE}
               alt="Canil Guardiões da Fronteira"
-              className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+              className="max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
             />
             <button
               type="button"
