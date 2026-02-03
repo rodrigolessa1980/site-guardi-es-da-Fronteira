@@ -11,8 +11,8 @@ export default function SuporteContinuo() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 sm:pt-28 md:pt-[8.5rem] pb-12 sm:pb-16">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen bg-black text-white pt-32 sm:pt-36 md:pt-[10.5rem] pb-12 sm:pb-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 mt-6">
         <Link
           to="/#consultoria"
           className="inline-flex items-center gap-2 text-white/60 hover:text-italy-green transition-colors mb-8"

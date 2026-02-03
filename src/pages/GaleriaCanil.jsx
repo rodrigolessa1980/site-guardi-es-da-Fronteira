@@ -23,7 +23,7 @@ export default function GaleriaCanil() {
   ].slice(0, 12)
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 sm:pt-28 md:pt-[8.5rem] pb-12 sm:pb-16">
+    <div className="min-h-screen bg-black text-white pt-32 sm:pt-36 md:pt-[10.5rem] pb-12 sm:pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <Link
           to="/#nosso-canil"

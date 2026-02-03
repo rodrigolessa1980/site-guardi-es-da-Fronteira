@@ -12,6 +12,7 @@ import CurriculoVeterinario from './pages/CurriculoVeterinario'
 import OrientacaoConsultoria from './pages/OrientacaoConsultoria'
 import SuporteContinuo from './pages/SuporteContinuo'
 import GaleriaCanil from './pages/GaleriaCanil'
+import TodosDepoimentos from './pages/TodosDepoimentos'
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/orientacao-consultoria" element={<OrientacaoConsultoria />} />
             <Route path="/suporte-continuo" element={<SuporteContinuo />} />
             <Route path="/galeria-canil" element={<GaleriaCanil />} />
+            <Route path="/depoimentos" element={<TodosDepoimentos />} />
           </Routes>
           <Footer />
           <ChatWidget />

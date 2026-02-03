@@ -7,6 +7,7 @@ import Filhotes from '../components/Filhotes'
 import NossoCanil from '../components/NossoCanil'
 import ConsultoriaVeterinaria from '../components/ConsultoriaVeterinaria'
 import Loja from '../components/Loja'
+import Depoimentos from '../components/Depoimentos'
 import Contato from '../components/Contato'
 import SectionDivider from '../components/SectionDivider'
 
@@ -37,6 +38,8 @@ export default function Home() {
       <ConsultoriaVeterinaria />
       <SectionDivider />
       <Loja />
+      <SectionDivider />
+      <Depoimentos />
       <SectionDivider />
       <Contato />
     </main>

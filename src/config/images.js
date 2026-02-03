@@ -41,6 +41,15 @@ export const IMAGES = {
     '/imagens/carne-corso-na-grama.png',
     ...Array.from({ length: 7 }, (_, i) => `/caes/Screenshot_${i + 1}.jpg`),
   ],
+  /** Fotos dos depoimentos (pequenas). Use imagens em public/depoimentos/ ou substitua pelos seus caminhos. */
+  depoimentos: {
+    1: '/imagens/cane-corso-p.jpg',
+    2: '/imagens/images.jpg',
+    3: '/imagens/images (1).jpg',
+    4: '/caes/Screenshot_1.jpg',
+    5: '/caes/Screenshot_2.jpg',
+    6: '/caes/Screenshot_3.jpg',
+  },
   /** Miniaturas das bandeiras (Brasil, Paraguai, EUA) para seletor de idioma */
   flags: {
     br: 'https://flagcdn.com/w40/br.png',
