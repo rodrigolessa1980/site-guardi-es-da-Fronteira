@@ -50,10 +50,14 @@ export default function Loja() {
                   <span className={`absolute top-3 right-3 px-2 py-1 text-xs font-medium rounded ${status.color}`}>
                     {status.label}
                   </span>
+                  <div className="absolute bottom-4 left-4 z-10">
+                    <span className="inline-block px-3 py-1.5 rounded-lg bg-black/90 text-white font-serif text-xl font-bold">
+                      {animal.nome}
+                    </span>
+                  </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-serif text-xl font-bold text-white mb-1">{animal.nome}</h3>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white/60 text-sm mb-3">
                     {animal.sexo === 'M' ? t('loja.macho') : t('loja.femea')} • {getIdade(animal)}
                   </p>
                   <motion.button

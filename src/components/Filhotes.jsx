@@ -42,9 +42,13 @@ export default function Filhotes() {
                   <span className={`absolute top-3 right-3 px-2 py-1 text-xs font-medium rounded ${status.color}`}>
                     {status.label}
                   </span>
+                  <div className="absolute bottom-3 left-3 z-10">
+                    <span className="inline-block px-3 py-1.5 rounded-lg bg-black/90 text-white font-serif text-xl font-bold">
+                      {fil.nome}
+                    </span>
+                  </div>
                 </div>
                 <div className="p-4 flex flex-col justify-between flex-1">
-                  <h3 className="font-serif text-xl font-bold text-white mb-2">{fil.nome}</h3>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

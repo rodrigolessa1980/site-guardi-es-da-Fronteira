@@ -36,9 +36,11 @@ export default function Matrizes() {
                   className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <h3 className="absolute bottom-4 left-4 right-4 font-serif text-2xl font-bold text-white z-10">
-                  {mat.nome}
-                </h3>
+                <div className="absolute bottom-4 left-4 z-10">
+                  <span className="inline-block px-3 py-1.5 rounded-lg bg-black/90 text-white font-serif text-2xl font-bold">
+                    {mat.nome}
+                  </span>
+                </div>
               </div>
               <div className="p-5 flex flex-col justify-between flex-1">
                 <p className="text-white/80 text-sm leading-relaxed mb-3">{t(`matrizes.${DESC_KEYS[i]}`)}</p>
