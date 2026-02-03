@@ -46,7 +46,7 @@ export default function Matrizes() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedAnimal(mat)}
-                  className="w-full py-2 text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white transition-colors"
+                  className="w-full py-3 min-h-[44px] text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white transition-colors flex items-center justify-center"
                 >
                   {t('filhotes.verDetalhes')}
                 </motion.button>

@@ -21,7 +21,7 @@ export default function NossoCanil() {
             <img
               src={IMAGES.galeria[0]}
               alt="Guardiões da Fronteira - Canil"
-              className="w-full h-56 sm:h-72 lg:h-80 object-cover"
+              className="w-full aspect-[4/3] sm:aspect-video object-cover"
             />
           </motion.div>
           <motion.div
@@ -54,7 +54,7 @@ export default function NossoCanil() {
             </ul>
             <Link
               to="/galeria-canil"
-              className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
+              className="inline-flex items-center justify-center gap-2 mt-6 px-6 py-4 min-h-[48px] bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
             >
               {t('nossoCanil.saibaMais')}
               <HiArrowRight size={20} />

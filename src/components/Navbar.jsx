@@ -135,10 +135,10 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Botão mobile à direita */}
+        {/* Botão mobile à direita - min 44px para toque */}
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden p-2 text-white hover:text-italy-green transition-colors absolute right-4 sm:right-6"
+          className="lg:hidden min-w-[44px] min-h-[44px] p-3 flex items-center justify-center text-white hover:text-italy-green transition-colors absolute right-4 sm:right-6"
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
         >
           {open ? <HiX size={28} /> : <HiMenu size={28} />}
@@ -180,7 +180,7 @@ export default function Navbar() {
                     <a
                       href={link.href}
                       onClick={(e) => scrollTo(e, link.href)}
-                      className="block py-3 px-4 text-white/90 hover:text-italy-green hover:bg-white/5 rounded-lg transition-colors"
+                      className="block py-4 px-4 min-h-[44px] text-white/90 hover:text-italy-green hover:bg-white/5 rounded-lg transition-colors flex items-center"
                     >
                       {t(`nav.${link.key}`)}
                     </a>
@@ -188,7 +188,7 @@ export default function Navbar() {
                     <Link
                       to={`/#${link.href.replace('#', '')}`}
                       onClick={() => setOpen(false)}
-                      className="block py-3 px-4 text-white/90 hover:text-italy-green hover:bg-white/5 rounded-lg transition-colors"
+                      className="block py-4 px-4 min-h-[44px] text-white/90 hover:text-italy-green hover:bg-white/5 rounded-lg transition-colors flex items-center"
                     >
                       {t(`nav.${link.key}`)}
                     </Link>

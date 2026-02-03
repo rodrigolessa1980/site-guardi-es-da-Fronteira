@@ -70,7 +70,7 @@ export default function Depoimentos() {
         >
           <Link
             to="/depoimentos"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-4 min-h-[48px] bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
           >
             {t('depoimentos.verMais')}
             <HiArrowRight size={20} />

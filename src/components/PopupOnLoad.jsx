@@ -45,7 +45,7 @@ export default function PopupOnLoad() {
             <button
               type="button"
               onClick={handleClose}
-              className="absolute -top-2 -right-2 p-2 rounded-full bg-white/10 text-white hover:bg-italy-red transition-colors"
+              className="absolute -top-2 -right-2 min-w-[44px] min-h-[44px] p-2 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-italy-red transition-colors"
               aria-label="Fechar"
             >
               <HiX size={24} />

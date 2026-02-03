@@ -149,7 +149,7 @@ export default function Contato() {
               disabled={enviando}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-2 py-3 text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-italy-green transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-4 min-h-[48px] text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white disabled:opacity-60 disabled:hover:bg-transparent disabled:hover:text-italy-green transition-colors"
             >
               {enviando ? t('contato.enviando') : enviado ? t('contato.enviado') : (
                 <>

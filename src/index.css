@@ -9,8 +9,17 @@
   }
   body {
     @apply bg-black text-white font-sans antialiased;
-    overflow-x: hidden;
+    overflow-x: hidden; /* evita scroll horizontal em mobile */
   }
+}
+
+/* Utilitário para área de toque adequada em mobile (mínimo 44x44px) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Scroll suave - margem para navbar + logo sobre a linha (header ~4rem + metade logo ~2rem) */
@@ -21,6 +30,26 @@
   .scroll-mt-nav {
     scroll-margin-top: 7rem;
   }
+}
+
+/* Botão "Conheça nosso canil" no Hero */
+.btn-conheca-canil {
+  background-color: #0F7A3D;
+  color: #F5E6B3;
+}
+.btn-conheca-canil:hover {
+  background-color: #0C5F30;
+  color: #fff;
+}
+
+/* Chat widget - container do modal */
+.chat-widget {
+  background-color: #0E3B2E;
+  border: 2px solid #2FA36B;
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(47, 163, 107, 0.4),
+    0 0 12px rgba(47, 163, 107, 0.35);
 }
 
 /* Evita zoom em inputs no iOS */

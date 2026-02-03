@@ -5,6 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    // Breakpoints mobile-first: base = mobile, sm = 640px, md = 768px, lg = 1024px, xl = 1280px
+    screens: {
+      sm: '640px',   // tablet
+      md: '768px',   // tablet landscape
+      lg: '1024px',  // desktop
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         // Paleta bandeira italiana
@@ -13,6 +21,8 @@ export default {
           white: '#FFFFFF',
           red: '#CD212A',
         },
+        // Cor do chat
+        chat: '#0E3B2E',
         // Tons para fundo e overlays
         dark: {
           900: '#0a0a0a',

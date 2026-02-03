@@ -50,7 +50,7 @@ export default function AnimalDetailModal({ animal, onClose, showTenhoInteresse 
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-dark-900/80 text-white hover:bg-italy-red transition-colors"
+          className="absolute top-4 right-4 z-10 min-w-[44px] min-h-[44px] p-2 flex items-center justify-center rounded-full bg-dark-900/80 text-white hover:bg-italy-red transition-colors"
           aria-label="Fechar"
         >
           <HiX size={24} />
@@ -135,7 +135,7 @@ export default function AnimalDetailModal({ animal, onClose, showTenhoInteresse 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleTenhoInteresse}
-              className="w-full py-4 bg-gradient-to-r from-italy-green to-italy-red text-white font-semibold rounded-lg"
+              className="w-full py-4 min-h-[48px] bg-gradient-to-r from-italy-green to-italy-red text-white font-semibold rounded-lg flex items-center justify-center"
             >
               {t('loja.tenhoInteresse')}
             </motion.button>

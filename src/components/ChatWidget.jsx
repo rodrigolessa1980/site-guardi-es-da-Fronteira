@@ -96,31 +96,32 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Botão flutuante */}
+      {/* Botão flutuante - min 44px para toque */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleChat}
-        className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-italy-green to-italy-red flex items-center justify-center text-white shadow-lg shadow-italy-green/30"
+        className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-50 min-w-[48px] min-h-[48px] w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white shadow-lg touch-target"
+        style={{ backgroundColor: '#1C2421' }}
         aria-label="Abrir chat"
       >
         <HiChat size={28} />
       </motion.button>
 
-      {/* Modal do chat */}
+      {/* Modal do chat - mobile-first: full width em mobile, max-width em desktop */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed bottom-20 sm:bottom-24 right-3 left-3 sm:left-auto sm:right-6 z-50 w-auto sm:w-[340px] md:w-[380px] max-w-[calc(100vw-1.5rem)] sm:max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-20 sm:bottom-24 right-3 left-3 sm:left-auto sm:right-6 z-50 w-[calc(100%-1.5rem)] sm:w-[340px] md:w-[380px] sm:max-w-[calc(100vw-3rem)]"
           >
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="rounded-2xl overflow-hidden bg-dark-800 border border-white/10 shadow-2xl"
+              className="chat-widget overflow-hidden"
             >
               {/* Header */}
               <div className="bg-gradient-to-r from-italy-green via-white to-italy-red px-4 py-3 flex items-center justify-between">
@@ -134,10 +135,11 @@ export default function ChatWidget() {
                 </button>
               </div>
 
-              {/* Mensagens */}
+              {/* Mensagens - min-height para garantir espaço em mobile */}
               <div
                 ref={listRef}
-                className="h-48 sm:h-64 overflow-y-auto p-3 sm:p-4 space-y-3 bg-dark-900"
+                className="min-h-[12rem] sm:min-h-[16rem] max-h-[50vh] overflow-y-auto p-3 sm:p-4 space-y-3"
+                style={{ backgroundColor: 'rgba(14, 59, 46, 0.95)' }}
               >
                 {messages.map((msg) => (
                   <div
@@ -166,14 +168,14 @@ export default function ChatWidget() {
               </div>
 
               {/* Input */}
-              <form onSubmit={handleSend} className="p-3 border-t border-white/10 bg-dark-800">
+              <form onSubmit={handleSend} className="p-3 border-t border-white/10" style={{ backgroundColor: '#0E3B2E' }}>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Digite sua mensagem..."
-                    className="flex-1 px-4 py-2.5 rounded-full bg-dark-900 border border-white/10 text-white placeholder-white/50 text-sm focus:outline-none focus:border-italy-green"
+                    className="flex-1 min-w-0 px-4 py-3 sm:py-2.5 rounded-full bg-dark-900 border border-white/10 text-white placeholder-white/50 text-base sm:text-sm focus:outline-none focus:border-italy-green"
                     disabled={loading}
                   />
                   <motion.button
@@ -181,7 +183,7 @@ export default function ChatWidget() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     disabled={loading}
-                    className="px-4 py-2.5 border border-italy-green text-italy-green font-medium rounded-full hover:bg-italy-green hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-italy-green transition-colors"
+                    className="flex-shrink-0 min-h-[44px] px-4 py-3 sm:py-2.5 border border-italy-green text-italy-green font-medium rounded-full hover:bg-italy-green hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-italy-green transition-colors"
                   >
                     {t('chat.enviar')}
                   </motion.button>

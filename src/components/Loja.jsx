@@ -60,7 +60,7 @@ export default function Loja() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedAnimal(animal)}
-                    className="w-full py-2 text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white transition-colors"
+                    className="w-full py-3 min-h-[44px] text-sm font-medium border border-italy-green text-italy-green rounded-lg hover:bg-italy-green hover:text-white transition-colors flex items-center justify-center"
                   >
                     {t('loja.verDetalhes')}
                   </motion.button>
@@ -73,7 +73,7 @@ export default function Loja() {
         <div className="flex justify-center mt-10 sm:mt-12">
           <Link
             to="/galeria-canil#entregas"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 py-4 min-h-[48px] bg-italy-green text-white font-semibold rounded-lg hover:bg-italy-green/90 transition-colors"
           >
             <HiTruck size={20} />
             {t('loja.sobreEntrega')}
