@@ -62,6 +62,19 @@ export default function Footer() {
           © {new Date().getFullYear()} Canil Guardiões da Fronteira. {t('footer.feitoCom')}
           <HiHeart className="text-italy-red inline" /> {t('footer.para')}
         </p>
+
+        {/* Desenvolvido por */}
+        <p className="text-white/50 text-xs text-center mt-4">
+          Desenvolvido por{' '}
+          <a
+            href="https://wa.me/5547996363506"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-italy-green hover:text-italy-red transition-colors"
+          >
+            Rodrigo Lessa
+          </a>
+        </p>
       </div>
     </footer>
   )
