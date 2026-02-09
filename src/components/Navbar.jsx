@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
+import { FaInstagram, FaFacebook } from 'react-icons/fa'
 import { IMAGES } from '../config/images'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -145,9 +146,9 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Selo profissional: abaixo do menu, alinhado à direita (próximo aos idiomas) */}
+      {/* Segundo nível: credencial veterinária + redes sociais (discretas, canto superior direito) */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 hidden lg:block pt-0.5 pb-1.5">
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center gap-4">
           <a
             href="#consultoria"
             onClick={(e) => scrollTo(e, '#consultoria')}
@@ -156,6 +157,26 @@ export default function Navbar() {
             <div>✔ {t('header.seloSupervisao')}</div>
             <div>{t('header.seloCRMV')}</div>
           </a>
+          <div className="flex items-center gap-2.5 text-white/70">
+            <a
+              href="https://www.instagram.com/canil.guardioesdafronteira/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-italy-green transition-colors"
+            >
+              <FaInstagram size={16} />
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="hover:text-italy-green transition-colors"
+            >
+              <FaFacebook size={16} />
+            </a>
+          </div>
         </div>
       </div>
 
