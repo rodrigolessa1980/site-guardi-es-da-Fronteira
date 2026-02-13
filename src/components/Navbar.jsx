@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
-import { FaInstagram, FaFacebook } from 'react-icons/fa'
+import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa'
 import { IMAGES } from '../config/images'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -175,6 +175,15 @@ export default function Navbar() {
               className="hover:text-italy-green transition-colors"
             >
               <FaFacebook size={16} />
+            </a>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="hover:text-italy-green transition-colors"
+            >
+              <FaYoutube size={16} />
             </a>
           </div>
         </div>
