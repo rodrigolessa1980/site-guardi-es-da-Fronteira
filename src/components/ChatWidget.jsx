@@ -6,39 +6,47 @@ import { useLanguage } from '../context/LanguageContext'
 
 /**
  * ============================================================
- * CHAT DE ATENDIMENTO COM IA - Integração n8n
+ * CHAT DE ATENDIMENTO - Integração n8n (webhook)
  * ============================================================
- *
- * Para conectar ao n8n:
- * 1. Configure um webhook no n8n
- * 2. Atualize a constante N8N_WEBHOOK_URL abaixo
- * 3. O payload enviado: { message: string, sessionId?: string }
- * 4. A resposta esperada: { reply: string } ou { text: string }
- *
- * Exemplo de webhook n8n:
- * - Método: POST
- * - Body: { message: "texto do usuário" }
- * - Resposta: { reply: "resposta da IA" }
+ * Payload: { previous: [...], now: string }
+ * - previous: últimas 10 mensagens (resumidas/truncadas)
+ * - now: última mensagem do usuário
+ * Resposta: { reply/text/message } ou array [{ output: string }]
  */
 
-const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK || 'https://seu-n8n.com/webhook/chat-guardioes' // ALTERAR: URL do seu webhook n8n
+const N8N_WEBHOOK_URL = 'https://dadosbi.monkeybranch.com.br/webhook/test1234'
+const CONTEXT_WINDOW_SIZE = 30
+const MAX_PREVIOUS_MSG_LENGTH = 200
+const STORAGE_KEY_MESSAGES = 'guardioes_chat_messages'
+const STORAGE_KEY_SESSION_ID = 'guardioes_chat_session_id'
 
-async function sendToN8n(message) {
-  // Se webhook não configurado, retorna mensagem simulada
-  if (N8N_WEBHOOK_URL.includes('seu-n8n.com')) {
-    return 'Obrigado pela mensagem! Em breve entraremos em contato pelo WhatsApp ou e-mail. Para atendimento imediato, use o botão WhatsApp no site.'
+function getSessionId() {
+  let id = localStorage.getItem(STORAGE_KEY_SESSION_ID)
+  if (!id) {
+    id = crypto.randomUUID()
+    localStorage.setItem(STORAGE_KEY_SESSION_ID, id)
   }
+  return id
+}
+
+function buildPrevious(messages) {
+  const slice = messages.slice(-CONTEXT_WINDOW_SIZE)
+  return slice.map((msg) => ({
+    role: msg.from === 'user' ? 'user' : 'bot',
+    text: (msg.text || '').slice(0, MAX_PREVIOUS_MSG_LENGTH),
+  }))
+}
+
+async function sendToN8n(previous, now) {
   try {
     const res = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message,
-        sessionId: sessionStorage.getItem('chatSessionId') || crypto.randomUUID(),
-      }),
+      body: JSON.stringify({ previous, now: (now || '').slice(0, MAX_PREVIOUS_MSG_LENGTH) }),
     })
     const data = await res.json()
-    return data.reply ?? data.text ?? 'Não foi possível processar sua mensagem.'
+    if (Array.isArray(data) && data[0]?.output != null) return String(data[0].output)
+    return data.reply ?? data.text ?? data.message ?? data.output ?? 'Não foi possível processar sua mensagem.'
   } catch (err) {
     console.error('Erro ao conectar ao n8n:', err)
     return 'Desculpe, o atendimento está temporariamente indisponível. Envie uma mensagem pelo WhatsApp.'
@@ -49,48 +57,114 @@ export default function ChatWidget() {
   const { open, toggleChat, closeChat } = useChat()
   const { lang, t } = useLanguage()
   const [messages, setMessages] = useState([])
-
-  useEffect(() => {
-    setMessages([{
-      id: 1,
-      from: 'bot',
-      text: t('chat.primeiraMsg'),
-      time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
-    }])
-  }, [lang])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const listRef = useRef(null)
+  const initialized = useRef(false)
+  const queueRef = useRef([])
+  const messagesRef = useRef([])
 
-  const handleSend = async (e) => {
+  // Inicialização: localStorage ou primeira mensagem do bot (uma vez só)
+  useEffect(() => {
+    if (initialized.current) return
+    initialized.current = true
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_MESSAGES)
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed) && parsed.length) {
+          setMessages(parsed)
+          return
+        }
+      }
+    } catch (_) {}
+    setMessages([
+      {
+        id: Date.now(),
+        from: 'bot',
+        text: t('chat.primeiraMsg'),
+        time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      },
+    ])
+  }, [lang, t])
+
+  // Manter ref em sync com messages para construir previous na fila
+  messagesRef.current = messages
+
+  // Persistir mensagens no localStorage sempre que mudarem
+  useEffect(() => {
+    if (messages.length === 0) return
+    try {
+      localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(messages))
+    } catch (_) {}
+  }, [messages])
+
+  const getTime = () => new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' })
+
+  const processQueue = () => {
+    if (queueRef.current.length === 0) {
+      setLoading(false)
+      return
+    }
+    const nowText = queueRef.current.shift()
+    if (!nowText) {
+      processQueue()
+      return
+    }
+    setLoading(true)
+    const currentMessages = messagesRef.current
+    const previous = buildPrevious(currentMessages)
+    sendToN8n(previous, nowText)
+      .then((reply) => {
+        const text = reply || t('chat.fallbackReply')
+        const botMsg = {
+          id: Date.now() + 1,
+          from: 'bot',
+          text,
+          time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        }
+        setMessages((m) => {
+          const next = [...m, botMsg]
+          messagesRef.current = next
+          return next
+        })
+        listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' })
+      })
+      .catch(() => {
+        const botMsg = {
+          id: Date.now() + 1,
+          from: 'bot',
+          text: 'Desculpe, tente novamente.',
+          time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        }
+        setMessages((m) => {
+          const next = [...m, botMsg]
+          messagesRef.current = next
+          return next
+        })
+      })
+      .finally(() => {
+        processQueue()
+      })
+  }
+
+  const handleSend = (e) => {
     e?.preventDefault()
     const text = input.trim()
-    if (!text || loading) return
+    if (!text) return
 
     const userMsg = {
       id: Date.now(),
       from: 'user',
       text,
-      time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      time: getTime(),
     }
-    setMessages((prev) => [...prev, userMsg])
+    const next = [...messages, userMsg]
+    messagesRef.current = next
+    setMessages(next)
     setInput('')
-    setLoading(true)
-
-    // Integração n8n
-    const reply = await sendToN8n(text, t('chat.fallbackReply'))
-    // Simulação local (quando n8n não está configurado):
-    // const reply = 'Obrigado pela mensagem! Em breve entraremos em contato pelo WhatsApp ou e-mail.'
-
-    const botMsg = {
-      id: Date.now() + 1,
-      from: 'bot',
-      text: reply,
-      time: new Date().toLocaleTimeString(lang === 'es' ? 'es' : 'pt-BR', { hour: '2-digit', minute: '2-digit' }),
-    }
-    setMessages((prev) => [...prev, botMsg])
-    setLoading(false)
-
+    queueRef.current.push(text)
+    if (!loading) processQueue()
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' })
   }
 
