@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom'
 import { HiHeart } from 'react-icons/hi'
-import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'
 import { useLanguage } from '../context/LanguageContext'
 
 const REDES_SOCIAIS = [
   { href: 'https://facebook.com', Icon: FaFacebook, label: 'Facebook' },
   { href: 'https://www.instagram.com/canil.guardioesdafronteira/', Icon: FaInstagram, label: 'Instagram' },
-  { href: 'https://linkedin.com', Icon: FaLinkedin, label: 'LinkedIn' },
   { href: 'https://youtube.com', Icon: FaYoutube, label: 'YouTube' },
 ]
 
