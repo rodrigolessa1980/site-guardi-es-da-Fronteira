@@ -29,6 +29,35 @@ function getSessionId() {
   return id
 }
 
+// Regex para detectar URLs (http/https, incluindo wa.me e similares)
+const URL_REGEX = /(https?:\/\/[^\s]+)/g
+
+/**
+ * Converte texto com links em nós React: texto normal + botão "Entrar em contato" para cada URL.
+ */
+function renderMessageWithLinks(text) {
+  if (!text || typeof text !== 'string') return text
+  const parts = text.split(URL_REGEX)
+  return parts.map((part, i) => {
+    const isUrl = part.startsWith('http://') || part.startsWith('https://')
+    if (isUrl) {
+      const href = part.replace(/\s+$/, '')
+      return (
+        <a
+          key={i}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-2 mb-1 px-4 py-2 rounded-lg font-medium text-white text-center bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition-colors no-underline"
+        >
+          Entrar em contato
+        </a>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
 function buildPrevious(messages) {
   const slice = messages.slice(-CONTEXT_WINDOW_SIZE)
   return slice.map((msg) => ({
@@ -227,7 +256,9 @@ export default function ChatWidget() {
                           : 'bg-dark-700 text-white/90 rounded-bl-md border-l-2 border-italy-green'
                       }`}
                     >
-                      <p className="whitespace-pre-line">{msg.text}</p>
+                      <p className="whitespace-pre-line">
+                        {msg.from === 'bot' ? renderMessageWithLinks(msg.text) : msg.text}
+                      </p>
                       <span className="text-xs opacity-70 mt-1 block">{msg.time}</span>
                     </div>
                   </div>
