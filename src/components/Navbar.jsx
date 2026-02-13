@@ -164,7 +164,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               aria-label="Instagram"
               className="hover:text-italy-green transition-colors"
-            >
+            > 
               <FaInstagram size={16} />
             </a>
             <a
