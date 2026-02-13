@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "copy:assets": "node scripts/copy-assets.js",
-    "predev": "npm run copy:assets",
-    "dev": "vite",
-    "prebuild": "npm run copy:assets",
-    "build": "vite build",
+    "dev": "scripts\\dev.cmd",
+    "build": "scripts\\build.cmd",
     "preview": "vite preview"
   },
   "dependencies": {
